@@ -7,7 +7,7 @@ export default defineConfig({
     proxy: {
       // 代理配置
       '/ouzx': {
-        target: 'https://api.bilibili.com',
+        target: 'http://127.0.0.1:9999',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/ouzx/, '')
       },

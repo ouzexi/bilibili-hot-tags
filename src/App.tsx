@@ -10,15 +10,15 @@ import { TransferRes } from './utils';
 
 const mockData = [
   { item: '标签1', count: 10 },
-  { item: '标签2', count: 20 },
-  { item: '标签3', count: 30 },
-  { item: '标签4', count: 40 },
-  { item: '标签5', count: 50 },
-  { item: '标签6', count: 60 },
-  { item: '标签7', count: 70 },
-  { item: '标签8', count: 80 },
-  { item: '标签9', count: 90 },
-  { item: '标签10', count: 100 }
+  { item: '标签2', count: 10 },
+  { item: '标签3', count: 10 },
+  { item: '标签4', count: 10 },
+  { item: '标签5', count: 10 },
+  { item: '标签6', count: 10 },
+  { item: '标签7', count: 10 },
+  { item: '标签8', count: 10 },
+  { item: '标签9', count: 10 },
+  { item: '标签10', count: 10 }
 ]
 
 function App() {
@@ -66,8 +66,10 @@ function App() {
     setLoading(true)
     FetchVideos(params)
       .then(res => {
-        if(res.code === ResponseEnum.SUCCESS) {
-          const cData = TransferRes(res)
+        if(res.data?.code === ResponseEnum.SUCCESS) {
+          const { message } = res.data;
+          const fetchData = JSON.parse(message);
+          const cData = TransferRes(fetchData)
           setChartData(cData)
         } else {
           showErrorTips(res.message)

@@ -2,7 +2,7 @@ import axios from "axios";
 // import getSignQuery from './sign'
 import type { SearchType } from "../enum";
 const API = axios.create({
-    // baseURL: '/ouzx',
+    baseURL: '/ouzx',
     method: 'POST',
     timeout: 45 * 1000,
     headers: {
@@ -12,7 +12,7 @@ const API = axios.create({
 })
 
 // export const FetchURL = '/x/web-interface/wbi/search/type?search_type=video'
-export const FetchURL = 'https://api.bilibili.com/x/web-interface/wbi/search/type?search_type=video'
+export const FetchURL = '/sys/fetch'
 // const query = await getSignQuery()
 
 const FetchVideos = (params: SearchType): Promise<Record<PropertyKey, any>> => {
