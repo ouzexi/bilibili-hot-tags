@@ -44,9 +44,8 @@ function App() {
   
     chart
     .interval()
-    // .data(chartData)
-    // 接口失效，模拟接口
-    .data(mockData)
+    // 接口失效，模拟数据
+    .data(chartData)
     .transform({ type: 'stackY' })
     .encode('y', 'count')
     .encode('color', 'item')
@@ -68,14 +67,17 @@ function App() {
     FetchVideos(params)
       .then(res => {
         if(res.code === ResponseEnum.SUCCESS) {
+          // @ts-ignore
           const cData = TransferRes(res)
           setChartData(cData)
         } else {
           showErrorTips(res.message)
+          setChartData(mockData)
         }
       })
       .catch(err => {
         showErrorTips(err.message)
+        setChartData(mockData)
       })
       .finally(() => {
         setLoading(false)
