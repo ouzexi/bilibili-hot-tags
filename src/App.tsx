@@ -38,7 +38,7 @@ function App() {
     const chart = new Chart({
       container: 'chart-container',
       type: 'view',
-      // autoFit: true
+      autoFit: true
     });
     chart.coordinate({ type: 'theta', outerRadius: 0.8, innerRadius: 0.5 });
   
@@ -67,7 +67,6 @@ function App() {
     FetchVideos(params)
       .then(res => {
         if(res.code === ResponseEnum.SUCCESS) {
-          // @ts-ignore
           const cData = TransferRes(res)
           setChartData(cData)
         } else {
