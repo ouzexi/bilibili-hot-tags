@@ -6,24 +6,30 @@ import type { SearchType } from './enum';
 import { OrderOptions, ResponseEnum } from './enum'; 
 import { useEffect, useState } from 'react';
 import FetchVideos from './api';
-import { TransferRes } from './utils';
+// import { TransferRes } from './utils';
 
-const mockData = [
-  { item: '标签1', count: 10 },
-  { item: '标签2', count: 10 },
-  { item: '标签3', count: 10 },
-  { item: '标签4', count: 10 },
-  { item: '标签5', count: 10 },
-  { item: '标签6', count: 10 },
-  { item: '标签7', count: 10 },
-  { item: '标签8', count: 10 },
-  { item: '标签9', count: 10 },
-  { item: '标签10', count: 10 }
+type TCData = {
+  item: string
+  count: number
+}
+
+const mockData: Array<TCData> = [
+  { item: '模拟0', count: 10 },
+  { item: '模拟1', count: 10 },
+  { item: '模拟2', count: 10 },
+  { item: '模拟3', count: 10 },
+  { item: '模拟4', count: 10 },
+  { item: '模拟5', count: 10 },
+  { item: '模拟6', count: 10 },
+  { item: '模拟7', count: 10 },
+  { item: '模拟8', count: 10 },
+  { item: '模拟9', count: 10 }
 ]
 
 function App() {
+  const [chart, setChart] = useState<Chart>()
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [chartData, setChartData] = useState<Array<any>>([])
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -34,18 +40,18 @@ function App() {
     });
   }
 
-  const renderChart = () => {
-    const chart = new Chart({
+  const renderChart = (cData: Array<TCData>) => {
+    const chartIns = new Chart({
       container: 'chart-container',
       type: 'view',
       autoFit: true
     });
-    chart.coordinate({ type: 'theta', outerRadius: 0.8, innerRadius: 0.5 });
-  
-    chart
+
+    chartIns.coordinate({ type: 'theta', outerRadius: 0.8, innerRadius: 0.5 });
+    chartIns
     .interval()
     // 接口失效，模拟数据
-    .data(chartData)
+    .data(cData)
     .transform({ type: 'stackY' })
     .encode('y', 'count')
     .encode('color', 'item')
@@ -59,35 +65,39 @@ function App() {
       value: data.count,
     }));
     
-    chart.render();
+    chartIns.render();
+
+    setChart(chartIns)
   }
+
+  const rerenderChart = (cData: Array<TCData>) => {
+    chart && chart.changeData(cData)
+  }
+
+  useEffect(() => {
+    renderChart([])
+  }, [])
 
   const onFinish: FormProps<SearchType>['onFinish'] = (params) => {
     setLoading(true)
     FetchVideos(params)
       .then(res => {
-        if(res.data?.code === ResponseEnum.SUCCESS) {
-          const { message } = res.data;
-          const fetchData = JSON.parse(message);
-          const cData = TransferRes(fetchData)
-          setChartData(cData)
+        if(res.status === ResponseEnum.SUCCESS && res.data) {
+          const { data: cData } = res.data;
+          rerenderChart(cData)
         } else {
           showErrorTips(res.message)
-          setChartData(mockData)
+          rerenderChart(mockData)
         }
       })
       .catch(err => {
         showErrorTips(err.message)
-        setChartData(mockData)
+        rerenderChart(mockData)
       })
       .finally(() => {
         setLoading(false)
       })
   };
-
-  useEffect(() => {
-    renderChart()
-  })
 
   return (
     <>

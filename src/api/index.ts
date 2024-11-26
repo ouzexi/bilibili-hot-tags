@@ -12,7 +12,7 @@ const API = axios.create({
 })
 
 // export const FetchURL = '/x/web-interface/wbi/search/type?search_type=video'
-export const FetchURL = '/sys/fetch'
+export const FetchURL = '/bilibili-tags'
 // const query = await getSignQuery()
 
 const FetchVideos = (params: SearchType): Promise<Record<PropertyKey, any>> => {
