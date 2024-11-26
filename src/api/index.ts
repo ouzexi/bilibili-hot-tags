@@ -13,7 +13,8 @@ const API = axios.create({
 
 // export const FetchURL = '/x/web-interface/wbi/search/type?search_type=video'
 // export const FetchURL = '/bilibili-tags'
-export const FetchURL = 'http://139.9.177.72/ouzx/bilibili-tags'
+// export const FetchURL = 'http://139.9.177.72/ouzx/bilibili-tags'
+export const FetchURL = 'https://bilibili-hot-tags-git-master-ouzexis-projects.vercel.app/api/proxy/bilibili-tags'
 // const query = await getSignQuery()
 
 const FetchVideos = (params: SearchType): Promise<Record<PropertyKey, any>> => {
