@@ -5,7 +5,8 @@ import type { FormProps } from 'antd'
 import type { SearchType } from './enum';
 import { OrderOptions, ResponseEnum } from './enum'; 
 import { useEffect, useState } from 'react';
-import FetchVideos from './api';
+import API from './api';
+import { NoticeType } from 'antd/es/message/interface';
 // import { TransferRes } from './utils';
 
 type TCData = {
@@ -33,9 +34,9 @@ function App() {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const showErrorTips = (errMsg: string) => {
+  const showTips = (errMsg: string, type: NoticeType = 'error') => {
     messageApi.open({
-      type: 'error',
+      type,
       content: errMsg,
     });
   }
@@ -80,13 +81,13 @@ function App() {
 
   const onFinish: FormProps<SearchType>['onFinish'] = (params) => {
     setLoading(true)
-    FetchVideos(params)
+    API.FetchVideos(params)
       .then(res => {
         if(res.status === ResponseEnum.SUCCESS && res.data) {
           const { data: cData } = res.data;
           rerenderChart(cData)
         } else {
-          showErrorTips(res.message)
+          showTips(res.message)
           rerenderChart(mockData)
         }
       })
@@ -95,19 +96,35 @@ function App() {
         if(err.status === ResponseEnum.BAD_GATEWAY) {
           errMsg = '访问来源不合法！'
         } else if(err.status === ResponseEnum.FAIL) {
-          errMsg = '请求频繁，请稍后再试！'
+          errMsg = '请求频繁，请10s后再试！'
         }
-        showErrorTips(errMsg)
-        rerenderChart(mockData)
+        showTips(errMsg)
       })
       .finally(() => {
         setLoading(false)
       })
   };
 
+  const handleUpdateCookie = () => {
+    const cookieVal = prompt('如果搜索失败且出现风控提示，则需要手动更新Cookie：\n\n1、请前往B站：https://www.bilibili.com/\n2、打开控制台输入：copy(document.cookie)\n3、点击回车后粘贴内容到此输入框点击确定')
+    if(!cookieVal) {
+      showTips('请输入cookie！')
+      return
+    }
+    API.FetchUpdateCookie(cookieVal)
+      .then(res => {
+        if(res.status === ResponseEnum.SUCCESS) {
+          showTips('更新Cookie成功', 'success')
+        } else {
+          showTips(res.message)
+        }
+      })
+  }
+
   return (
     <>
       { contextHolder }
+      <Button className='update-cookie-btn' size='small' onClick={handleUpdateCookie}>更新Cookie</Button>
       <h1>B站视频热门标签👀</h1>
       <h4>Tips: 根据关键词进行搜索前20项视频，聚合统计次数最多的10个视频标签~🥳</h4>
       <div className="card">

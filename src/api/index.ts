@@ -13,6 +13,7 @@ const API = axios.create({
 
 // export const FetchURL = '/bilibili-tags'
 export const FetchURL = 'https://bilibili-hot-tags-git-master-ouzexis-projects.vercel.app/ouzx/bilibili-tags'
+const FetchCookieURL = 'https://bilibili-hot-tags-git-master-ouzexis-projects.vercel.app/ouzx/update-cookie'
 // const query = await getSignQuery()
 
 const FetchVideos = (params: SearchType): Promise<Record<PropertyKey, any>> => {
@@ -21,4 +22,8 @@ const FetchVideos = (params: SearchType): Promise<Record<PropertyKey, any>> => {
     })
 }
 
-export default FetchVideos;
+const FetchUpdateCookie = (cookieVal: string): Promise<Record<PropertyKey, any>> => {
+    return API.post(FetchCookieURL, { cookieVal })
+}
+
+export default { FetchVideos, FetchUpdateCookie };
