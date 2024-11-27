@@ -91,7 +91,11 @@ function App() {
         }
       })
       .catch(err => {
-        showErrorTips(err.message)
+        let errMsg = err.message
+        if(err.status === ResponseEnum.FAIL) {
+          errMsg = '请求频繁，请稍后再试！'
+        }
+        showErrorTips(errMsg)
         rerenderChart(mockData)
       })
       .finally(() => {

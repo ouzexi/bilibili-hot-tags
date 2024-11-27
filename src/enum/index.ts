@@ -17,5 +17,6 @@ export type TagType = {
 }
 
 export enum ResponseEnum {
-    'SUCCESS' = 200
+    'SUCCESS' = 200,
+    'FAIL' = 503
 }
