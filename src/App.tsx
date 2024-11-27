@@ -92,7 +92,9 @@ function App() {
       })
       .catch(err => {
         let errMsg = err.message
-        if(err.status === ResponseEnum.FAIL) {
+        if(err.status === ResponseEnum.BAD_GATEWAY) {
+          errMsg = '访问来源不合法！'
+        } else if(err.status === ResponseEnum.FAIL) {
           errMsg = '请求频繁，请稍后再试！'
         }
         showErrorTips(errMsg)

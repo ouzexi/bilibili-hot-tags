@@ -18,5 +18,6 @@ export type TagType = {
 
 export enum ResponseEnum {
     'SUCCESS' = 200,
+    'BAD_GATEWAY' = 502,
     'FAIL' = 503
 }
