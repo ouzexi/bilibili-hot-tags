@@ -31,18 +31,20 @@ bilibili-hot-tags是一个根据关键词进行B站热门视频标签检索统�
 
  本篇README.md面向开发者
 
+##### [后端仓库](https://github.com/ouzexi/bilibili-hot-tags-backend)
+
 ### 使用指南
 
 进入网站，输入你想要检索标签的视频关键词。比如，您想获取【羽毛球教学】该类视频的视频标签，那么您可以输入关键词【羽毛球教学】，点击 “搜索🔍”按钮。
 
 搜索完成后饼图会将使用次数最多的10个标签（比如【"羽毛球", "教学", "体育"...】）统计结果可视化展示。您就可以将这10个标签加入到您的视频当中~👀
 
-###### **开发步骤**
+##### **开发步骤**
 
 1、克隆项目
 
 ```sh
-git clone git@github.com:ouzexi/bilibili-hot-tags.git
+git clone https://github.com/ouzexi/bilibili-hot-tags.git
 ```
 
 2、下载依赖
@@ -80,8 +82,8 @@ npm run dev
 
 ### 版权说明
 
-该项目签署了MIT 授权许可
+该项目遵循MIT授权许可
 
-### 鸣谢
+### 特别鸣谢
 
 - [bilibili-API-collect](https://github.com/SocialSisterYi/bilibili-API-collect)
