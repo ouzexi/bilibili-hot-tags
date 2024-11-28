@@ -144,8 +144,8 @@ function App() {
       </div>
       <div id="chart-container" />
       <p className="read-the-docs">
-        Made by Ouzx
-        <a href="http://139.9.177.72/">👉点我联系作者</a>
+        Prod by ouzexi
+        <a href="http://139.9.177.72/"> 👉联系作者</a>
       </p>
     </>
   )
